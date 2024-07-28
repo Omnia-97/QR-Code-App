@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentManager;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
@@ -157,6 +159,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void readerBarCodeData(List<Barcode> barcodes) {
+            for(Barcode barcode : barcodes){
+                Rect bounds = barcode.getBoundingBox();
+                Point [] corners = barcode.getCornerPoints();
+                String rawValue = barcode.getRawValue();
+                int valueType = barcode.getValueType();
+                switch (valueType){
+                    case Barcode.TYPE_WIFI:
+                        String ssid = barcode.getWifi().getSsid();
+                        String password = barcode.getWifi().getPassword();
+                        int type = barcode.getWifi().getEncryptionType();
+                         break;
+                    case Barcode.TYPE_URL:
+                        if(bottomDialog.isAdded()){
+                            bottomDialog.show(fragmentManager , "");
+                        }
+                        bottomDialog.fetchUrl(barcode.getUrl().getUrl());
+                        String title = barcode.getUrl().getTitle();
+                        String url = barcode.getUrl().getUrl();
+                        break;
+                }
+            }
         }
     }
 }
