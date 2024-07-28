@@ -141,11 +141,11 @@ public class MainActivity extends AppCompatActivity {
             BarcodeScanner scanner = BarcodeScanning.getClient(scannerOptions);
             Task<List<Barcode>> result = scanner.process(inputImage).
                     addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
-                @Override
-                public void onSuccess(List<Barcode> barcodes) {
-                      readerBarCodeData(barcodes);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onSuccess(List<Barcode> barcodes) {
+                            readerBarCodeData(barcodes);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(MainActivity.this,"Something went wrong", Toast.LENGTH_SHORT).show();
@@ -169,12 +169,12 @@ public class MainActivity extends AppCompatActivity {
                         String ssid = barcode.getWifi().getSsid();
                         String password = barcode.getWifi().getPassword();
                         int type = barcode.getWifi().getEncryptionType();
-                         break;
+                        break;
                     case Barcode.TYPE_URL:
                         if(bottomDialog.isAdded()){
                             bottomDialog.show(fragmentManager , "");
                         }
-                        bottomDialog.fetchUrl(barcode.getUrl().getUrl());
+                        bottomDialog.fetchurl(barcode.getUrl().getUrl());
                         String title = barcode.getUrl().getTitle();
                         String url = barcode.getUrl().getUrl();
                         break;

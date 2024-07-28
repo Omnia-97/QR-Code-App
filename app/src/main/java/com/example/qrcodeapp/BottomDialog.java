@@ -16,47 +16,46 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BottomDialog extends BottomSheetDialogFragment {
-    private TextView title , link , btn_visit;
+    private TextView title,link,btn_visit;
     private ImageView close;
-    private String fetchUrl;
-
+    private String fetchurl;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_dialog, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstancesState){
+        View view = inflater.inflate(R.layout.bottom_dialog,container,false);
+
         title = view.findViewById(R.id.txt_title);
         link = view.findViewById(R.id.txt_link);
         btn_visit = view.findViewById(R.id.visit);
         close = view.findViewById(R.id.close);
-        title.setText(fetchUrl);
+        title.setText(fetchurl);
         btn_visit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent("android.intent.action.VIEW");
-                i.setData(Uri.parse(fetchUrl));
-                startActivity(i);
+                Intent intent = new Intent("android.intent.action.VIEW");
+                intent.setData(Uri.parse(fetchurl));
+                startActivity(intent);
             }
         });
-        close.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 dismiss();
             }
         });
         return view;
     }
-    public void fetchUrl(String url){
+    public void fetchurl(String url){
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                fetchUrl = url;
+                fetchurl = url;
             }
         });
     }
